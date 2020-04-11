@@ -1,2 +1,2 @@
 # Workers
-A app that helps in availing some of the local service mens.
+An android app that lets the user find local service men.
