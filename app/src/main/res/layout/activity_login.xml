@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_login_signup_background"
+    tools:context=".Login">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:src="@drawable/logo">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:fontFamily="@font/acme"
+            android:letterSpacing="0.01"
+            android:text="Welcome back"
+            android:textSize="36dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="1dp"
+            android:letterSpacing="0.001"
+            android:text="Sign in to your account"
+            android:textColor="#ffffff"
+            android:textSize="15dp"
+            android:textStyle="bold">
+        </TextView>
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="30dp"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:ems="10"
+            android:hint="someone@example.com"
+            android:textAlignment="center"
+            android:background="@drawable/bc_input_login_signup"
+            android:alpha="0.5"
+            android:inputType="textEmailAddress">
+        </EditText>
+        <EditText
+            android:id="@+id/edtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="30dp"
+            android:textSize="20dp"
+            android:textAllCaps="false"
+            android:ems="10"
+            android:hint="password"
+            android:textAlignment="center"
+            android:background="@drawable/bc_input_login_signup"
+            android:alpha="0.5"
+            android:inputType="textPassword">
+        </EditText>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:text="Sign In"
+            android:background="@drawable/login_btn_custom"
+            android:textAllCaps="false"
+            android:textSize="18dp">
+        </Button>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="53dp"
+             >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="New user?"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#FFFFFF"
+                ></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:textColor="#0701B2"
+                >
+            </TextView>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
