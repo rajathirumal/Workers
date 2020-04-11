@@ -4,6 +4,148 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_login_signup_background"
     tools:context=".SignUp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:src="@drawable/logo">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/acme"
+            android:text="E-mail"
+            android:textSize="20dp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <EditText
+            android:id="@+id/edtEmailSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="30dp"
+            android:alpha="0.5"
+            android:background="@drawable/bc_input_login_signup"
+            android:ems="10"
+            android:hint="someone@example.com"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="20dp">
+
+        </EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/acme"
+            android:text="User name"
+            android:textSize="20dp"
+            android:textStyle="bold">
+        </TextView>
+
+        <EditText
+            android:id="@+id/edtUsername"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="30dp"
+            android:alpha="0.5"
+            android:background="@drawable/bc_input_login_signup"
+            android:ems="10"
+            android:hint="This will appear to all users"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="20dp">
+        </EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/acme"
+            android:text="Password"
+            android:textSize="20dp"
+            android:textStyle="bold">
+        </TextView>
+
+        <EditText
+            android:id="@+id/edtPasswordSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="30dp"
+            android:alpha="0.5"
+            android:background="@drawable/bc_input_login_signup"
+            android:ems="10"
+            android:hint="Enter you password"
+            android:inputType="textPassword"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textSize="20dp">
+        </EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/acme"
+            android:text="Enter category"
+            android:textSize="20dp"
+            android:textStyle="bold">
+        </TextView>
+        <Spinner
+            android:id="@+id/categorySpinner"
+            android:background="@drawable/bc_input_login_signup"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textAlignment="center"
+            android:textSize="20dp"
+
+            android:alpha="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/category_arrays"
+            android:prompt="@string/category_prompt" >
+        </Spinner>
+        <Button
+            android:id="@+id/btnSignUp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:text="Sign Up"
+            android:background="@drawable/login_btn_custom"
+            android:textAllCaps="false"
+            android:textSize="18dp">
+        </Button>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

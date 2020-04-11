@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Workers</string>
+    <string name="category_prompt">Choose a type</string>
+
+    <string-array name="category_arrays">
+        <item>Public</item>
+        <item>Electrician</item>
+        <item>Plumber</item>
+        <item>Painter</item>
+        <item>Carpenter</item>
+        <item>Cook</item>
+        <item>Laundry</item>
+        <item>Computer Service</item>
+    </string-array>
 </resources>
