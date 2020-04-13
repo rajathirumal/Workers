@@ -73,17 +73,18 @@
             android:alpha="0.5"
             android:inputType="textPassword">
         </EditText>
+
         <Button
+            android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="6dp"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="6dp"
             android:layout_marginRight="30dp"
-            android:text="Sign In"
             android:background="@drawable/login_btn_custom"
+            android:text="Sign In"
             android:textAllCaps="false"
-            android:textSize="18dp">
-        </Button>
+            android:textSize="18dp"></Button>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -3,9 +3,7 @@ package com.example.workers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,7 +14,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -87,7 +84,7 @@ public class SignUp extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
                                                         Toast.makeText(SignUp.this, "Registered as a app user", Toast.LENGTH_SHORT).show();
-                                                        // move to user page
+                                                        // move to public user page.
                                                     }
                                                 }
                                             });
@@ -112,56 +109,64 @@ public class SignUp extends AppCompatActivity {
                                                     DBRoot.child("app_users_workers")
                                                             .child("electrician")
                                                             .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped as an " + userType.toLowerCase(),
+                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
                                                             Toast.LENGTH_SHORT).show();
                                                     break;
                                                 case "Plumber":
                                                     DBRoot.child("app_users_workers")
                                                             .child("plumber")
                                                             .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped as an " + userType.toLowerCase(),
+                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
                                                             Toast.LENGTH_SHORT).show();
                                                     break;
                                                 case "Painter":
                                                     DBRoot.child("app_users_workers")
                                                             .child("painter")
                                                             .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped as an " + userType.toLowerCase(),
+                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
                                                             Toast.LENGTH_SHORT).show();
                                                     break;
                                                 case "Carpenter":
                                                     DBRoot.child("app_users_workers")
                                                             .child("carpenter")
                                                             .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped as an " + userType.toLowerCase(),
+                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
                                                             Toast.LENGTH_SHORT).show();
                                                     break;
                                                 case "Cook":
                                                     DBRoot.child("app_users_workers")
                                                             .child("cook")
                                                             .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped as an " + userType.toLowerCase(),
+                                                    Toast.makeText(SignUp.this, "You have been mapped as a " + userType.toLowerCase(),
                                                             Toast.LENGTH_SHORT).show();
                                                     break;
                                                 case "Laundry":
                                                     DBRoot.child("app_users_workers")
                                                             .child("laundry")
                                                             .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped as an " + userType.toLowerCase(),
+                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
+                                                            Toast.LENGTH_SHORT).show();
+                                                    break;
+                                                case "Tailor":
+                                                    DBRoot.child("app_users_workers")
+                                                            .child("tailor")
+                                                            .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
+                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
                                                             Toast.LENGTH_SHORT).show();
                                                     break;
                                                 case "Computer Service":
                                                     DBRoot.child("app_users_workers")
                                                             .child("computer_service")
                                                             .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped as an " + userType.toLowerCase(),
+                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
                                                             Toast.LENGTH_SHORT).show();
                                                     break;
-
                                             }
-
-
                                         }
+                                        DBRoot.child("all_users").child(task.getResult().getUser().getUid()).setValue(userType);
+
+                                        // Move the worker to worker dashboard
+
 
                                     } else {
                                         Toast.makeText(SignUp.this, "Authentication failed.", Toast.LENGTH_SHORT).show();

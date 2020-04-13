@@ -10,6 +10,7 @@
         <item>Carpenter</item>
         <item>Cook</item>
         <item>Laundry</item>
+        <item>Tailor</item>
         <item>Computer Service</item>
     </string-array>
 </resources>
