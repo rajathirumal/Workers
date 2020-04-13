@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "434682389495",
+    "firebase_url": "https://workers-facbc.firebaseio.com",
+    "project_id": "workers-facbc",
+    "storage_bucket": "workers-facbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434682389495:android:2ec076fd7f8a9b708784f2",
+        "android_client_info": {
+          "package_name": "com.example.workers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "434682389495-pv0b248vs6qruv9dpgatmn0c9mu2culb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzyM4eUbjhIiRpkLiS7u8mhEM_bVKrZjU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "434682389495-pv0b248vs6qruv9dpgatmn0c9mu2culb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -64,7 +64,7 @@
         </TextView>
 
         <EditText
-            android:id="@+id/edtUsername"
+            android:id="@+id/edtUsernameSignUp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="30dp"
