@@ -51,46 +51,13 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    private void login() {
-        mAuth.signInWithEmailAndPassword(edtEmailLogin.getText().toString(), edtPasswordLogin.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                final FirebaseUser user = authResult.getUser();
-                Log.i("TAG", user.getUid());
-                DBRoot.child("all_users").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot d : dataSnapshot.getChildren()) {
-                            if (d.getKey().equals(user.getUid())) {
-                                currentUserType = Objects.requireNonNull(d.getValue()).toString();
-                                Log.i("TAG", currentUserType);
-                                if (currentUserType.equals("Public")) {
-                                    // Move to public page.
-                                    Log.i("TAG", "i am a Public");
-                                } else {
-                                    // Move to worker dash bord.
-                                    Log.i("TAG", "im going to worker dash board");
-                                }
-                            }
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        });
-    }
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         final FirebaseUser currentUser = mAuth.getCurrentUser();
-
-
         if (currentUser != null) {
             DBRoot.child("all_users").addValueEventListener(new ValueEventListener() {
                 @Override
@@ -101,7 +68,8 @@ public class Login extends AppCompatActivity {
                             Log.i("TAG", currentUserType);
                             if (currentUserType.equals("Public")) {
                                 // Move to public page.
-                                Log.i("TAG", "i am a Public");
+                                Log.i("TAG", "i am a Public : i'v already signed in ");
+                                startActivity(new Intent(Login.this,PublicPage.class));
                             } else {
                                 // Move to worker dash bord.
                                 Log.i("TAG", "im going to worker dash board");
@@ -118,6 +86,37 @@ public class Login extends AppCompatActivity {
 
 
         }
+    }
+    private void login() {
+        mAuth.signInWithEmailAndPassword(edtEmailLogin.getText().toString(), edtPasswordLogin.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                final FirebaseUser user = authResult.getUser();
+                Log.i("TAG", user.getUid());
+                DBRoot.child("all_users").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot d : dataSnapshot.getChildren()) {
+                            if (d.getKey().equals(user.getUid())) {
+                                currentUserType = Objects.requireNonNull(d.getValue()).toString();
+                                Log.i("TAG", currentUserType);
+                                if (currentUserType.equals("Public")) {
+                                    // Move to public page.
+                                    Log.i("TAG", "i am a Public");
+                                    startActivity(new Intent(Login.this,PublicPage.class));
+                                } else {
+                                    // Move to worker dash bord.
+                                    Log.i("TAG", "im going to worker dash board");
+                                }
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+            }
+        });
     }
 
 
