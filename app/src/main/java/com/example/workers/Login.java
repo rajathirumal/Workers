@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -106,12 +106,14 @@ public class Login extends AppCompatActivity {
                         public void onSuccess(AuthResult authResult) {
                             final FirebaseUser user = authResult.getUser();
 
+
+                            assert user != null;
                             Log.i("TAG", user.getUid());
                             DBRoot.child("all_users").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for (DataSnapshot d : dataSnapshot.getChildren()) {
-                                        if (d.getKey().equals(user.getUid())) {
+                                        if (Objects.equals(d.getKey(), user.getUid())) {
                                             currentUserType = Objects.requireNonNull(d.getValue()).toString();
                                             Log.i("TAG", currentUserType);
                                             if (currentUserType.equals("Public")) {
