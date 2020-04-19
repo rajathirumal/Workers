@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +39,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         DBRoot = FirebaseDatabase.getInstance().getReference();
 
         edtEmailLogin = findViewById(R.id.edtEmailLogin);
@@ -52,10 +55,10 @@ public class Login extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onStart() {
         super.onStart();
+
         // Check if user is signed in (non-null) and update UI accordingly.
         final FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
@@ -69,10 +72,11 @@ public class Login extends AppCompatActivity {
                             if (currentUserType.equals("Public")) {
                                 // Move to public page.
                                 Log.i("TAG", "i am a Public : i'v already signed in ");
-                                startActivity(new Intent(Login.this,PublicPage.class));
+                                startActivity(new Intent(Login.this, PublicPage.class));
                             } else {
                                 // Move to worker dash bord.
                                 Log.i("TAG", "im going to worker dash board");
+                                startActivity(new Intent(Login.this, WorkerDashBoard.class));
                             }
                         }
                     }
@@ -87,36 +91,50 @@ public class Login extends AppCompatActivity {
 
         }
     }
+
     private void login() {
-        mAuth.signInWithEmailAndPassword(edtEmailLogin.getText().toString(), edtPasswordLogin.getText().toString()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                final FirebaseUser user = authResult.getUser();
-                Log.i("TAG", user.getUid());
-                DBRoot.child("all_users").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot d : dataSnapshot.getChildren()) {
-                            if (d.getKey().equals(user.getUid())) {
-                                currentUserType = Objects.requireNonNull(d.getValue()).toString();
-                                Log.i("TAG", currentUserType);
-                                if (currentUserType.equals("Public")) {
-                                    // Move to public page.
-                                    Log.i("TAG", "i am a Public");
-                                    startActivity(new Intent(Login.this,PublicPage.class));
-                                } else {
-                                    // Move to worker dash bord.
-                                    Log.i("TAG", "im going to worker dash board");
+        if (edtEmailLogin.getText().toString().equals("")) {
+            Toast.makeText(Login.this, "E-mail ID required", Toast.LENGTH_LONG).show();
+        } else if (edtPasswordLogin.getText().toString().equals("") || edtPasswordLogin.getText().toString().length() < 6) {
+            Toast.makeText(Login.this, "Enter a valid password", Toast.LENGTH_LONG).show();
+        } else {
+
+
+            mAuth.signInWithEmailAndPassword(edtEmailLogin.getText().toString(), edtPasswordLogin.getText().toString())
+                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult) {
+                            final FirebaseUser user = authResult.getUser();
+
+                            Log.i("TAG", user.getUid());
+                            DBRoot.child("all_users").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot d : dataSnapshot.getChildren()) {
+                                        if (d.getKey().equals(user.getUid())) {
+                                            currentUserType = Objects.requireNonNull(d.getValue()).toString();
+                                            Log.i("TAG", currentUserType);
+                                            if (currentUserType.equals("Public")) {
+                                                // Move to public page.
+                                                Log.i("TAG", "i am a Public");
+                                                startActivity(new Intent(Login.this, PublicPage.class));
+                                            } else {
+                                                // Move to worker dash bord.
+                                                Log.i("TAG", "im going to worker dash board");
+                                                startActivity(new Intent(Login.this, WorkerDashBoard.class));
+                                            }
+                                        }
+                                    }
                                 }
-                            }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            });
                         }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
-            }
-        });
+
+                    });
+        }
     }
 
 
