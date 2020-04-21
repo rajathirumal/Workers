@@ -1,41 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bgapps"
+    tools:context=".WorkerDashBoard">
 
-    android:orientation="vertical">
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-
-
-</androidx.cardview.widget.CardView>
-
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20">
-
-        <!--        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--            android:id="@+id/layout2"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content">-->
-
-        <LinearLayout
-            android:id="@+id/layout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-        <!--        </RelativeLayout>-->
-    </ScrollView>
-
-    <include
-        layout="@layout/layout_logout"
+    <LinearLayout
+        android:id="@+id/blueBoard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="bottom" />
+        android:orientation="vertical">
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:id="@+id/txtWorkerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Worker name"
+                android:textAllCaps="true"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtProfession"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtWorkerName"
+                android:layout_marginTop="6sp"
+                android:text="Profession"
+                android:textColor="#A3CDE8"
+                android:textSize="20dp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtStarRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtProfession"
+                android:layout_marginTop="6sp"
+                android:text="7/10 Stars"
+                android:textColor="#A3CDE8"
+                android:textSize="20dp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/txtPlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtStarRating"
+                android:layout_marginTop="6sp"
+                android:text="Place"
+                android:textColor="#A3CDE8"
+                android:textSize="20dp">
+
+            </TextView>
+        </RelativeLayout>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:columnOrderPreserved="false"
+            android:rowCount="3">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:onClick="onSettingsClickedByWorker"
+                android:src="@drawable/ic_settings_black_24dp">
+
+            </ImageView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="2"
+                android:onClick="onLogOutClickedByWorker"
+                android:src="@drawable/ic_exit_to_app_black_24dp">
+            </ImageView>
+
+        </GridLayout>
+
+    </LinearLayout>
+
+
+
+
+</ScrollView>
