@@ -3,7 +3,9 @@ package com.example.workers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -49,141 +51,135 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signup();
-
             }
         });
     }
 
     private void signup() {
-        if (!edtEmailSignUp.getText().toString().isEmpty()) {
-            if (!edtUsernameSignUp.getText().toString().isEmpty()) {
-                if (!edtPasswordSignUp.getText().toString().isEmpty()) {
-                    firebaseAuth.createUserWithEmailAndPassword(edtEmailSignUp.getText().toString(), edtPasswordSignUp.getText().toString())
-                            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // Create a hash map to put details to the database
-                                        HashMap<String, String> userDetails = new HashMap<>();
-                                        userDetails.put("userName", edtUsernameSignUp.getText().toString());
-                                        userDetails.put("userType", String.valueOf(categorySelectorSpinner.getSelectedItem()));
-                                        userDetails.put("createdDate", new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
-                                        userDetails.put("createdTime", new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
+        if (edtEmailSignUp.getText().toString().equals("")) {
+            Toast.makeText(SignUp.this, "E-mail ID required", Toast.LENGTH_LONG).show();
+        } else if (edtPasswordSignUp.getText().toString().equals("") || edtPasswordSignUp.getText().toString().length() < 6) {
+            Toast.makeText(SignUp.this, "Enter a valid password", Toast.LENGTH_LONG).show();
+        } else if (!edtUsernameSignUp.getText().toString().isEmpty()) {
+            Toast.makeText(SignUp.this, "User name required", Toast.LENGTH_LONG).show();
+        } else {
+            firebaseAuth.createUserWithEmailAndPassword(edtEmailSignUp.getText().toString(), edtPasswordSignUp.getText().toString())
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Create a hash map to put details to the database
+                                HashMap<String, String> userDetails = new HashMap<>();
+                                userDetails.put("userName", edtUsernameSignUp.getText().toString());
+                                userDetails.put("userType", String.valueOf(categorySelectorSpinner.getSelectedItem()));
+                                userDetails.put("createdDate", new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
+                                userDetails.put("createdTime", new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date()));
 
-                                        userType = categorySelectorSpinner.getSelectedItem().toString();
+                                userType = categorySelectorSpinner.getSelectedItem().toString();
 
-                                        // if the app user is public
-                                        if (userType.equals("Public")) {
-                                            // update the database at
-                                            // https://workers-facbc.firebaseio.com/app_users_public/public_details/UID_public
-                                            DBRoot.child("app_users_public")
-                                                    .child(task.getResult().getUser().getUid())
-                                                    .child("public_details")
-                                                    .push().setValue(userDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Toast.makeText(SignUp.this, "Registered as a app user", Toast.LENGTH_SHORT).show();
-                                                        // move to public user page.
-                                                    }
-                                                }
-                                            });
-                                        }
-                                        // of the app user is a worker
-                                        else {
-                                            // Add extra fields
-                                            userDetails.put("work_state", "Free");
-                                            userDetails.put("booking_state", "Free");
-
-                                            // update the date to database
-                                            // https://workers-facbc.firebaseio.com/app_users_workers/worker_details/UID_workers
-                                            DBRoot.child("app_users_workers")
-                                                    .child("worker_details")
-                                                    .child(task.getResult().getUser().getUid())
-                                                    .push().setValue(userDetails);
-
-                                            // Add the worker to appropriate work group
-                                            // https://workers-facbc.firebaseio.com/app_users_workers/worker_group/
-                                            switch (userType) {
-                                                case "Electrician":
-                                                    DBRoot.child("app_users_workers")
-                                                            .child("electrician")
-                                                            .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
-                                                            Toast.LENGTH_SHORT).show();
-                                                    break;
-                                                case "Plumber":
-                                                    DBRoot.child("app_users_workers")
-                                                            .child("plumber")
-                                                            .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
-                                                            Toast.LENGTH_SHORT).show();
-                                                    break;
-                                                case "Painter":
-                                                    DBRoot.child("app_users_workers")
-                                                            .child("painter")
-                                                            .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
-                                                            Toast.LENGTH_SHORT).show();
-                                                    break;
-                                                case "Carpenter":
-                                                    DBRoot.child("app_users_workers")
-                                                            .child("carpenter")
-                                                            .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
-                                                            Toast.LENGTH_SHORT).show();
-                                                    break;
-                                                case "Cook":
-                                                    DBRoot.child("app_users_workers")
-                                                            .child("cook")
-                                                            .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped as a " + userType.toLowerCase(),
-                                                            Toast.LENGTH_SHORT).show();
-                                                    break;
-                                                case "Laundry":
-                                                    DBRoot.child("app_users_workers")
-                                                            .child("laundry")
-                                                            .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
-                                                            Toast.LENGTH_SHORT).show();
-                                                    break;
-                                                case "Tailor":
-                                                    DBRoot.child("app_users_workers")
-                                                            .child("tailor")
-                                                            .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
-                                                            Toast.LENGTH_SHORT).show();
-                                                    break;
-                                                case "Computer Service":
-                                                    DBRoot.child("app_users_workers")
-                                                            .child("computer_service")
-                                                            .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
-                                                    Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
-                                                            Toast.LENGTH_SHORT).show();
-                                                    break;
+                                // if the app user is public
+                                if (userType.equals("Public")) {
+                                    // update the database at
+                                    // https://workers-facbc.firebaseio.com/app_users_public/public_details/UID_public
+                                    DBRoot.child("app_users_public")
+                                            .child(task.getResult().getUser().getUid())
+                                            .child("public_details")
+                                            .push().setValue(userDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(SignUp.this, "Registered as a app user", Toast.LENGTH_SHORT).show();
+                                                // move to public user page.
+                                                startActivity(new Intent(SignUp.this, PublicPage.class));
                                             }
                                         }
-                                        DBRoot.child("all_users").child(task.getResult().getUser().getUid()).setValue(userType);
+                                    });
+                                }
+                                // if the app user is a worker
+                                else {
+                                    // Add extra fields
+                                    userDetails.put("work_state", "Free");
+                                    userDetails.put("booking_state", "Free");
 
-                                        // Move the worker to worker dashboard
+                                    // update the date to database
+                                    // https://workers-facbc.firebaseio.com/app_users_workers/worker_details/UID_workers
+                                    DBRoot.child("app_users_workers")
+                                            .child("worker_details")
+                                            .child(task.getResult().getUser().getUid())
+                                            .push().setValue(userDetails);
 
-
-                                    } else {
-                                        Toast.makeText(SignUp.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                    // Add the worker to appropriate work group
+                                    // https://workers-facbc.firebaseio.com/app_users_workers/worker_group/
+                                    switch (userType) {
+                                        case "Electrician":
+                                            DBRoot.child("app_users_workers")
+                                                    .child("electrician")
+                                                    .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
+                                            Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
+                                                    Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "Plumber":
+                                            DBRoot.child("app_users_workers")
+                                                    .child("plumber")
+                                                    .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
+                                            Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
+                                                    Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "Painter":
+                                            DBRoot.child("app_users_workers")
+                                                    .child("painter")
+                                                    .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
+                                            Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
+                                                    Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "Carpenter":
+                                            DBRoot.child("app_users_workers")
+                                                    .child("carpenter")
+                                                    .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
+                                            Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
+                                                    Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "Cook":
+                                            DBRoot.child("app_users_workers")
+                                                    .child("cook")
+                                                    .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
+                                            Toast.makeText(SignUp.this, "You have been mapped as a " + userType.toLowerCase(),
+                                                    Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "Laundry":
+                                            DBRoot.child("app_users_workers")
+                                                    .child("laundry")
+                                                    .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
+                                            Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
+                                                    Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "Tailor":
+                                            DBRoot.child("app_users_workers")
+                                                    .child("tailor")
+                                                    .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
+                                            Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
+                                                    Toast.LENGTH_SHORT).show();
+                                            break;
+                                        case "Computer Service":
+                                            DBRoot.child("app_users_workers")
+                                                    .child("computer_service")
+                                                    .child(task.getResult().getUser().getUid()).setValue(edtUsernameSignUp.getText().toString());
+                                            Toast.makeText(SignUp.this, "You have been mapped under " + userType.toLowerCase(),
+                                                    Toast.LENGTH_SHORT).show();
+                                            break;
                                     }
                                 }
-                            });
-                } else {
-                    Toast.makeText(SignUp.this, "Password required", Toast.LENGTH_LONG).show();
-                }
-            } else {
-                Toast.makeText(SignUp.this, "User name required", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(SignUp.this, "E-mail id required", Toast.LENGTH_LONG).show();
+                                DBRoot.child("all_users").child(task.getResult().getUser().getUid()).setValue(userType);
+
+                                // Move the worker to worker dashboard
+                                startActivity(new Intent(SignUp.this, WorkerDashBoard.class));
+
+
+                            } else {
+                                Toast.makeText(SignUp.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
-
     }
-//                Log.i("TAG", "onClick: "+ String.valueOf(categorySelectorSpinner.getSelectedItem()) );
-
 }
