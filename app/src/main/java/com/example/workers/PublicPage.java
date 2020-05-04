@@ -26,8 +26,8 @@ public class PublicPage extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_nav);
 
         // When loaded for the first time open home page
-        if(savedInstanceState== null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,new HomeFragment()).commit();
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new HomeFragment()).commit();
         }
 
         // On select of the bottom navigation view icon move to the respective classes.
@@ -35,7 +35,7 @@ public class PublicPage extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment = null;
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.home:
                         fragment = new HomeFragment();
                         break;
@@ -46,11 +46,10 @@ public class PublicPage extends AppCompatActivity {
                         fragment = new ProfileFragment();
                         break;
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer,fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
                 return true;
             }
         });
 
     }
-
 }

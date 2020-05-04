@@ -60,8 +60,6 @@ public class SignUp extends AppCompatActivity {
             Toast.makeText(SignUp.this, "E-mail ID required", Toast.LENGTH_LONG).show();
         } else if (edtPasswordSignUp.getText().toString().equals("") || edtPasswordSignUp.getText().toString().length() < 6) {
             Toast.makeText(SignUp.this, "Enter a valid password", Toast.LENGTH_LONG).show();
-        } else if (!edtUsernameSignUp.getText().toString().isEmpty()) {
-            Toast.makeText(SignUp.this, "User name required", Toast.LENGTH_LONG).show();
         } else {
             firebaseAuth.createUserWithEmailAndPassword(edtEmailSignUp.getText().toString(), edtPasswordSignUp.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -91,6 +89,7 @@ public class SignUp extends AppCompatActivity {
                                                 Toast.makeText(SignUp.this, "Registered as a app user", Toast.LENGTH_SHORT).show();
                                                 // move to public user page.
                                                 startActivity(new Intent(SignUp.this, PublicPage.class));
+                                                finish();
                                             }
                                         }
                                     });
@@ -100,6 +99,7 @@ public class SignUp extends AppCompatActivity {
                                     // Add extra fields
                                     userDetails.put("work_state", "Free");
                                     userDetails.put("booking_state", "Free");
+                                    userDetails.put("stars","10");
 
                                     // update the date to database
                                     // https://workers-facbc.firebaseio.com/app_users_workers/worker_details/UID_workers
@@ -173,6 +173,7 @@ public class SignUp extends AppCompatActivity {
 
                                 // Move the worker to worker dashboard
                                 startActivity(new Intent(SignUp.this, WorkerDashBoard.class));
+                                finish();
 
 
                             } else {

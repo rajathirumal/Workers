@@ -13,8 +13,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.Objects;
-
 public class ProfileFragment extends Fragment {
 
     private Button btnLogout;

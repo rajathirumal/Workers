@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class WorkerDashBoard extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +23,23 @@ public class WorkerDashBoard extends AppCompatActivity {
     }
 
 
+    // settings icon clicked
     public void onSettingsClickedByWorker(View view) {
-        startActivity(new Intent(WorkerDashBoard.this,Worker_setting.class));
+        startActivity(new Intent(WorkerDashBoard.this, Worker_setting.class));
     }
-    public  void onLogOutClickedByWorker(View view){
+
+    // logout icon clicked
+    public void onLogOutClickedByWorker(View view) {
+        logout();
+    }
+
+    @Override
+    public void onBackPressed() {
+        logout();
+    }
+
+    //Logout function
+    private void logout() {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(WorkerDashBoard.this, android.R.style.Theme_Material_Dialog_Alert);
